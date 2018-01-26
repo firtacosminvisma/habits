@@ -3,7 +3,7 @@ package com.economic.habits.ui.list
 import android.arch.lifecycle.MediatorLiveData
 import com.economic.habits.base.BaseViewModel
 import com.economic.habits.data.Reminder
-import io.reactivex.Scheduler
+import com.economic.habits.ui.model.ReminderModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -13,12 +13,17 @@ import javax.inject.Inject
  *
  */
 class HabitsListViewModel @Inject constructor(
-        private val model:HabitsListModel
+        private val model: ReminderModel
 ) : BaseViewModel(), HabitsListEventListener {
+
+    companion object {
+        val UPDATE_UI = "UPDATE_UI"
+        val GO_TO_NEW_REMINDER = "GO_TO_NEW_REMINDER"
+    }
 
 
     private val TAG = "HabitsListViewModel"
-    val state:MediatorLiveData<HabitsListView> = MediatorLiveData()
+    val state:MediatorLiveData<String> = MediatorLiveData()
     val view:HabitsListView = HabitsListView()
 
 
@@ -32,23 +37,24 @@ class HabitsListViewModel @Inject constructor(
                 view.reminders.clear()
                 view.reminders.addAll(it.asIterable())
                 view.loading = false
-                state.postValue(view)
+                state.postValue(UPDATE_UI)
             }
         } )
 
     }
 
     override fun fabClicked() {
-        val rem = Reminder()
-        rem.message = "some message added newlly"
-        view.loading = true
-        model.addReminder(rem)?.subscribeOn(Schedulers.newThread())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe {
-                    view.loading = false
-                    state.postValue(view)
-                }
-        state.postValue(view)
+//        val rem = Reminder()
+//        rem.message = "some message added newlly"
+//        view.loading = true
+//        model.addReminder(rem)?.subscribeOn(Schedulers.newThread())
+//                ?.observeOn(AndroidSchedulers.mainThread())
+//                ?.subscribe {
+//                    view.loading = false
+//                    state.postValue(UPDATE_UI)
+//                }
+//        state.postValue(UPDATE_UI)
+        state.postValue(GO_TO_NEW_REMINDER)
     }
 
 }

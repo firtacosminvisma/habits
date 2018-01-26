@@ -1,4 +1,4 @@
-package com.economic.habits.ui.list
+package com.economic.habits.ui.model
 
 import android.arch.lifecycle.LiveData
 import com.economic.habits.base.BaseModel
@@ -12,18 +12,7 @@ import javax.inject.Inject
  * Created by cosmin on 1/26/18.
  *
  */
-class HabitsListModel @Inject constructor(private val reminderDao: ReminderDao): BaseModel() {
-
-    fun getReminders():List<Reminder>{
-        return listOf(Reminder().apply {
-            message = "remimnder 1"
-            minute = 20
-        }, Reminder().apply {
-            message = "reminger 2"
-            minute = 50
-        })
-    }
-
+class ReminderModel @Inject constructor(private val reminderDao: ReminderDao): BaseModel() {
 
     fun addReminder(rem: Reminder): Observable<Boolean>? {
         return Observable.fromCallable(InsertCallable(rem, reminderDao))
@@ -34,8 +23,8 @@ class HabitsListModel @Inject constructor(private val reminderDao: ReminderDao):
     }
 
     class InsertCallable(
-        var remToAdd:Reminder? = null,
-        var reminderDAO:ReminderDao
+        private var remToAdd:Reminder? = null,
+        private var reminderDAO:ReminderDao
     ):Callable<Boolean>{
         override fun call(): Boolean {
             remToAdd?.let{

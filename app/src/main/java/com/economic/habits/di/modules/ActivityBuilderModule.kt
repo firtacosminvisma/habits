@@ -1,6 +1,7 @@
 package com.economic.habits.di.modules
 
 import com.economic.habits.ui.list.HabitsListActivity
+import com.economic.habits.ui.reminder.ReminderActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -13,4 +14,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilderModule {
     @ContributesAndroidInjector(modules = arrayOf(FragmentBuildersModule::class))
     internal abstract fun contributeHabitsListActivity(): HabitsListActivity
+
+    @ContributesAndroidInjector(modules = arrayOf(FragmentBuildersModule::class))
+    internal abstract fun contributeReminderActivity(): ReminderActivity
 }
