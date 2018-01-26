@@ -8,9 +8,9 @@ import android.arch.persistence.room.PrimaryKey
  * Created by cosmin on 1/26/18.
  * a pojo class holding a reminder
  */
-@Entity
+@Entity(tableName = "reminders")
 class Reminder {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     var uid:Int = 0
 
     @ColumnInfo(name = "message")

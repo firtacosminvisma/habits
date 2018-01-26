@@ -12,7 +12,8 @@ import dagger.Provides
  */
 
 @Module(includes = [
-    (ViewModelModule::class)
+    (ViewModelModule::class),
+    (DbModule::class)
 ])
 class AppModule {
 

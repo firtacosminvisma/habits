@@ -11,5 +11,5 @@ import android.arch.persistence.room.Database
  */
 @Database(entities = arrayOf(Reminder::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDao(): ReminderDao
+    abstract fun reminderDao(): ReminderDao
 }

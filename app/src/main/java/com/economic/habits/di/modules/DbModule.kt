@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import android.arch.persistence.room.Room
 import android.content.Context
+import com.economic.habits.data.ReminderDao
 
 
 /**
@@ -20,5 +21,11 @@ class DbModule {
     fun provideDb(c:Context): AppDatabase{
         return Room.databaseBuilder(c.applicationContext,
                                     AppDatabase::class.java, "habitsDb").build()
+    }
+
+    @Provides
+    @AppScope
+    fun provideReminderDAO(db: AppDatabase): ReminderDao{
+        return db.reminderDao()
     }
 }
