@@ -2,6 +2,8 @@ package com.economic.habits.di
 
 import android.app.Application
 import com.economic.habits.MainApp
+import com.economic.habits.di.modules.ActivityBuilderModule
+import com.economic.habits.di.modules.AppModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -11,7 +13,12 @@ import dagger.android.AndroidInjectionModule
  * The [dagger.Component] component for the main app [MainApp]
  */
 @AppScope
-@Component(modules = arrayOf(AndroidInjectionModule::class))
+@Component(modules =
+           [
+               (AndroidInjectionModule::class),
+               (AppModule::class),
+               (ActivityBuilderModule::class)
+           ])
 interface AppComponent {
     @Component.Builder
     interface Builder {
