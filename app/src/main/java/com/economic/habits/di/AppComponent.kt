@@ -4,6 +4,7 @@ import android.app.Application
 import com.economic.habits.MainApp
 import com.economic.habits.di.modules.ActivityBuilderModule
 import com.economic.habits.di.modules.AppModule
+import com.economic.habits.di.modules.DbModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -17,7 +18,8 @@ import dagger.android.AndroidInjectionModule
            [
                (AndroidInjectionModule::class),
                (AppModule::class),
-               (ActivityBuilderModule::class)
+               (ActivityBuilderModule::class),
+               (DbModule::class)
            ])
 interface AppComponent {
     @Component.Builder
