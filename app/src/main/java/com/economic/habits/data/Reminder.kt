@@ -17,6 +17,6 @@ class Reminder {
     var message:String = ""
 
     @ColumnInfo(name= "minute")
-    var minute:Long = 0
+    var minute:Int = 0
 
 }

@@ -61,8 +61,8 @@ class HabitsListFragment : BaseFragment() {
     }
 
     private fun goToAddReminder() {
-        startActivity(ReminderActivity.getIntent(context))
-        activity.finish()
+        startActivityForResult(ReminderActivity.getIntent(context), 1)
+//        activity.finish()
     }
 
 }

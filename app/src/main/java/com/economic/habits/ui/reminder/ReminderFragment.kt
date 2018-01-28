@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.economic.habits.R
 import com.economic.habits.base.BaseFragment
-import com.economic.habits.data.Reminder
 import com.economic.habits.databinding.FragmentReminderBinding
 import com.economic.habits.utils.AutoClearedValue
 
@@ -34,9 +33,19 @@ class ReminderFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         vm = ViewModelProviders.of(activity, viewModelFactory).get(ReminderViewModel::class.java)
-        vm.state.observe(this, Observer<Reminder> { res ->
-            
+        vm.state.observe(this, Observer<String> { res ->
+            if ( res == ReminderViewModel.UPDATE_UI ) {
+                binding.get()?.let {
+                    it.view = vm.view
+                    it.listener = vm
+                }
+            }else if ( res == ReminderViewModel.CLOSE_ACT ){
+                closeAct()
+            }
         })
     }
 
+    private fun closeAct() {
+        activity.finish()
+    }
 }
