@@ -5,8 +5,12 @@
         <variable
             name="vm"
             type="com.economic.habits.ui.list.list.HabitsListItemVM"/>
+        <variable
+            name="reminder"
+            type="com.economic.habits.data.Reminder"/>
 
     </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,8 +21,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="@{vm.item.message}"
+            android:text="@{reminder.message}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text='@{reminder.minute > 0 ? ""+(reminder.minute/60)+":"+(reminder.minute%60) : ""}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
     </android.support.constraint.ConstraintLayout>
 </layout>

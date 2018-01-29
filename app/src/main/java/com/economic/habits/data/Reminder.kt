@@ -19,4 +19,9 @@ class Reminder {
     @ColumnInfo(name= "minute")
     var minute:Int = 0
 
+
+    override fun toString():String{
+        return "uid: $uid message: $message minute: $minute"
+    }
+
 }

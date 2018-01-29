@@ -2,6 +2,7 @@ package com.economic.habits.ui.base
 
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 
 
@@ -14,6 +15,7 @@ abstract class RecyclerViewAdapter<ITEM_T, VIEW_MODEL_T : ItemViewModel<ITEM_T>>
     var layoutManager: RecyclerView.LayoutManager? = null
 
     override fun onBindViewHolder(holder: ItemViewHolder<ITEM_T, VIEW_MODEL_T>, position: Int) {
+        Log.d("RecyclerViewAdapter","::onBindViewHolder"+items[position])
         holder.setItem(items[position])
         holder.binding.executePendingBindings()
     }
@@ -22,7 +24,7 @@ abstract class RecyclerViewAdapter<ITEM_T, VIEW_MODEL_T : ItemViewModel<ITEM_T>>
         return items.size
     }
 
-    class ItemViewHolder<T, out VT : ItemViewModel<T>>(itemView: View, val binding: ViewDataBinding, protected val viewModel: VT) : RecyclerView.ViewHolder(itemView) {
+    class ItemViewHolder<T, out VT : ItemViewModel<T>>(itemView: View, val binding: ViewDataBinding, val viewModel: VT) : RecyclerView.ViewHolder(itemView) {
         internal fun setItem(item: T) {
             viewModel.item = item
             binding.executePendingBindings()

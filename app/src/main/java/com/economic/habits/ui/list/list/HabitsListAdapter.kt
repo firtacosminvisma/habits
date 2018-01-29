@@ -4,6 +4,7 @@ import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.economic.habits.R
@@ -27,8 +28,16 @@ class HabitsListAdapter(
         val vm = HabitsListItemVM(null)
         val holder = ItemViewHolder(binding.root, binding, vm)
         binding.vm = vm
+        binding.reminder = vm.item
         return holder
     }
+    override fun onBindViewHolder(holder: ItemViewHolder<Reminder, HabitsListItemVM>, position: Int) {
+        Log.d("HabitsListAdapter", "::onBindViewHolder"+items[position])
+        holder.setItem(items[position])
+        (holder.binding as? HabitsListItemBinding)?.reminder = holder.viewModel.item
+        holder.binding.executePendingBindings()
+    }
+
 
     override fun createLayoutManager(): RecyclerView.LayoutManager {
         return LinearLayoutManager(context)
