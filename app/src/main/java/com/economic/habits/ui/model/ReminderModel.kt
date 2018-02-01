@@ -34,4 +34,21 @@ class ReminderModel @Inject constructor(private val reminderDao: ReminderDao): B
         }
     }
 
+    class RemoveCallable(
+            private var remToAdd:Reminder? = null,
+            private var reminderDAO:ReminderDao
+    ):Callable<Boolean>{
+        override fun call(): Boolean {
+            remToAdd?.let{
+                reminderDAO.delete(it)
+            }
+            return true
+        }
+    }
+
+
+    fun removeReminder(rem:Reminder):Observable<Boolean> {
+        return Observable.fromCallable(RemoveCallable(rem, reminderDao))
+    }
+
 }

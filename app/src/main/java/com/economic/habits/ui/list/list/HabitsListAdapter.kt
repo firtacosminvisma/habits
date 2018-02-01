@@ -19,13 +19,13 @@ import com.economic.habits.ui.list.HabitsListViewModel
  */
 class HabitsListAdapter(
         private val context: Context,
-        private val parantVM: HabitsListViewModel
+        private val parentVM: HabitsListViewModel
 ) : RecyclerViewAdapter<Reminder, HabitsListItemVM>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemViewHolder<Reminder, HabitsListItemVM> {
         val inflater = LayoutInflater.from(parent?.context)
         val binding = DataBindingUtil.inflate<HabitsListItemBinding>(inflater!!, R.layout.habits_list_item, parent, false)
-        val vm = HabitsListItemVM(null)
+        val vm = HabitsListItemVM(null, parentVM)
         val holder = ItemViewHolder(binding.root, binding, vm)
         binding.vm = vm
         binding.reminder = vm.item

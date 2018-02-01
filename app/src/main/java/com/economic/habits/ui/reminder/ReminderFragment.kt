@@ -40,9 +40,15 @@ class ReminderFragment : BaseFragment() {
                     it.listener = vm
                 }
             }else if ( res == ReminderViewModel.CLOSE_ACT ){
+                saveReminder()
                 closeAct()
             }
         })
+    }
+
+    private fun saveReminder() {
+
+
     }
 
     private fun closeAct() {

@@ -38,13 +38,12 @@ class ReminderViewModel @Inject constructor(private var model: ReminderModel): B
         {
             rem.message = view.message
             rem.minute = view.minutes
-            model.addReminder(rem)
 
-        model.addReminder(rem)?.subscribeOn(Schedulers.newThread())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe {
-                    state.postValue(CLOSE_ACT)
-                }
+            model.addReminder(rem)?.subscribeOn(Schedulers.newThread())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe {
+                        state.postValue(CLOSE_ACT)
+                    }
         }
     }
 

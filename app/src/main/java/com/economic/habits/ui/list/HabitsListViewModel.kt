@@ -1,9 +1,11 @@
 package com.economic.habits.ui.list
 
 import android.arch.lifecycle.MediatorLiveData
+import android.util.Log
 import com.economic.habits.base.BaseViewModel
 import com.economic.habits.data.Reminder
 import com.economic.habits.ui.model.ReminderModel
+import com.economic.habits.ui.reminder.ReminderViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -41,6 +43,15 @@ class HabitsListViewModel @Inject constructor(
             }
         } )
 
+    }
+
+    fun removeReminder(rem: Reminder){
+        model.removeReminder(rem).subscribeOn(Schedulers.newThread())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe {
+//                    state.postValue(ReminderViewModel.CLOSE_ACT)
+                    Log.d(TAG,"::removed reminder")
+                }
     }
 
     override fun fabClicked() {
