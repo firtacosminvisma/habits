@@ -5,6 +5,7 @@ import com.economic.habits.MainApp
 import com.economic.habits.di.modules.ActivityBuilderModule
 import com.economic.habits.di.modules.AppModule
 import com.economic.habits.di.modules.DbModule
+import com.economic.habits.ui.notifications.NotificationService
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -30,4 +31,6 @@ interface AppComponent {
     }
 
     fun inject(mainApp: MainApp)
+
+    fun inject(notificationService: NotificationService)
 }

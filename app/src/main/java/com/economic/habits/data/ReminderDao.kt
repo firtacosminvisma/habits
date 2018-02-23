@@ -19,4 +19,7 @@ interface ReminderDao {
     @Delete
     fun delete(rem: Reminder)
 
+    @Query( "SELECT * FROM reminders ORDER BY minute ASC LIMIT 1" )
+    fun getFirstTwo()
+
 }
