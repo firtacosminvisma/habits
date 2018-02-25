@@ -6,7 +6,8 @@ package com.economic.habits.ui.notifications
  */
 interface INotificationView {
 
-    fun printNotification(message: String)
+    fun printNotification(message: String, notificationId: Int)
     fun setAlarm(alarmTime: Long)
+    fun deleteAlarm()
 
 }

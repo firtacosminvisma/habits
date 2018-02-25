@@ -10,7 +10,15 @@ import android.view.ViewGroup
 import com.economic.habits.R
 import com.economic.habits.base.BaseFragment
 import com.economic.habits.databinding.FragmentReminderBinding
+import com.economic.habits.ui.notifications.NotificationService
 import com.economic.habits.utils.AutoClearedValue
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.content.Context.ALARM_SERVICE
+import java.util.*
+
 
 /**
  * Created by cosmin on 1/26/18.
@@ -31,27 +39,31 @@ class ReminderFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        vm = ViewModelProviders.of(activity, viewModelFactory).get(ReminderViewModel::class.java)
-        vm.state.observe(this, Observer<String> { res ->
-            if ( res == ReminderViewModel.UPDATE_UI ) {
-                binding.get()?.let {
-                    it.view = vm.view
-                    it.listener = vm
+        activity?.let { act ->
+            vm = ViewModelProviders.of(act, viewModelFactory).get(ReminderViewModel::class.java)
+            vm.state.observe(this, Observer<String> { res ->
+                if (res == ReminderViewModel.UPDATE_UI) {
+                    binding.get()?.let {
+                        it.view = vm.view
+                        it.listener = vm
+                    }
+                } else if (res == ReminderViewModel.CLOSE_ACT) {
+                    saveReminder()
+                    closeAct()
                 }
-            }else if ( res == ReminderViewModel.CLOSE_ACT ){
-                saveReminder()
-                closeAct()
-            }
-        })
+            })
+        }
     }
 
     private fun saveReminder() {
 
+        context?.let {ctx ->
+            activity?.startService(NotificationService.setAlarmIntent(ctx))
+        }
 
     }
 
     private fun closeAct() {
-        activity.finish()
+        activity?.finish()
     }
 }

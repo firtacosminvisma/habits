@@ -5,6 +5,7 @@ import com.economic.habits.base.BaseModel
 import com.economic.habits.data.Reminder
 import com.economic.habits.data.ReminderDao
 import io.reactivex.Observable
+import org.joda.time.DateTime
 import java.util.concurrent.Callable
 import javax.inject.Inject
 
@@ -12,14 +13,40 @@ import javax.inject.Inject
  * Created by cosmin on 1/26/18.
  *
  */
-class ReminderModel @Inject constructor(private val reminderDao: ReminderDao): BaseModel() {
+class ReminderModel @Inject constructor(private val reminderDao: ReminderDao) : BaseModel() {
 
     fun addReminder(rem: Reminder): Observable<Boolean>? {
         return Observable.fromCallable(InsertCallable(rem, reminderDao))
     }
 
-    fun getReminderLiveData():LiveData<List<Reminder>>{
+    fun getReminderLiveData(): LiveData<List<Reminder>>{
         return reminderDao.getAll()
+    }
+
+    fun removeReminder(rem:Reminder): Observable<Boolean> {
+        return Observable.fromCallable(RemoveCallable(rem, reminderDao))
+    }
+
+    fun getFirstTwoReminders(): List<Reminder> {
+        return reminderDao.getFirstTwo(DateTime.now().minuteOfDay)
+    }
+
+    fun getFirst(): Reminder{
+        return reminderDao.getFirstAfter(DateTime.now().minuteOfDay)
+    }
+
+    fun getAllIdenticalAfter(minute: Int): List<Reminder> {
+        val first = getFirstAfter(minute)
+        return getAllWithMin(first.minute)
+    }
+
+    fun getFirstAfter(minute: Int): Reminder {
+        return reminderDao.getFirstAfter(minute)
+    }
+
+    fun getAllWithMin(minute: Int): List<Reminder> {
+        return reminderDao.getAllWithMin(minute)
+
     }
 
     class InsertCallable(
@@ -44,11 +71,6 @@ class ReminderModel @Inject constructor(private val reminderDao: ReminderDao): B
             }
             return true
         }
-    }
-
-
-    fun removeReminder(rem:Reminder):Observable<Boolean> {
-        return Observable.fromCallable(RemoveCallable(rem, reminderDao))
     }
 
 }

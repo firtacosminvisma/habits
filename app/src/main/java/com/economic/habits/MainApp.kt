@@ -3,6 +3,7 @@ package com.economic.habits
 import android.app.Activity
 import android.app.Application
 import com.economic.habits.di.AppInjector
+import com.economic.habits.ui.notifications.NotificationService
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -30,6 +31,10 @@ class MainApp : Application(), HasActivityInjector {
 
     override fun activityInjector(): AndroidInjector<Activity> {
         return dispatchingAndroidInjector
+    }
+
+    fun injectIntoService(service: NotificationService){
+        AppInjector.inject(service)
     }
 
 }

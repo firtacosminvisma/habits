@@ -17,7 +17,7 @@ class AutoClearedValue<T> : LifecycleObserver {
     private var value: T? = null
 
     constructor(fragment: Fragment, value: T) {
-        val fragmentManager = fragment.fragmentManager
+        val fragmentManager = fragment.fragmentManager!!
         fragmentManager.registerFragmentLifecycleCallbacks(
                 object : FragmentManager.FragmentLifecycleCallbacks() {
                     override fun onFragmentViewDestroyed(fm: FragmentManager?, f: Fragment?) {

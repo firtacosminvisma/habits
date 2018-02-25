@@ -32,37 +32,40 @@ class HabitsListFragment : BaseFragment() {
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        vm = ViewModelProviders.of(activity, viewModelFactory).get(HabitsListViewModel::class.java)
-        vm.state.observe(this, Observer<String> { action ->
-            if ( action == HabitsListViewModel.UPDATE_UI ) {
-                vm.view.reminders.let { reminders ->
-                    binding.get()?.let {
-                        if (it.habitsList.adapter != null) {
-                            (it.habitsList.adapter as? HabitsListAdapter)?.let {
-                                it.items.clear()
-                                it.items.addAll(reminders.asIterable())
-                                it.notifyDataSetChanged()
+        activity?.let { act ->
+            vm = ViewModelProviders.of(act, viewModelFactory).get(HabitsListViewModel::class.java)
+            vm.state.observe(this, Observer<String> { action ->
+                if (action == HabitsListViewModel.UPDATE_UI) {
+                    vm.view.reminders.let { reminders ->
+                        binding.get()?.let {
+                            if (it.habitsList.adapter != null) {
+                                (it.habitsList.adapter as? HabitsListAdapter)?.let {
+                                    it.items.clear()
+                                    it.items.addAll(reminders.asIterable())
+                                    it.notifyDataSetChanged()
+                                }
+                            } else {
+                                val adapter = HabitsListAdapter(context!!, vm)
+                                adapter.items.addAll(reminders.asIterable())
+                                it.adapter = adapter
                             }
-                        } else {
-                            val adapter = HabitsListAdapter(context, vm)
-                            adapter.items.addAll(reminders.asIterable())
-                            it.adapter = adapter
+                            it.view = vm.view
+                            it.listener = vm
+                            it.executePendingBindings()
                         }
-                        it.view = vm.view
-                        it.listener = vm
-                        it.executePendingBindings()
                     }
+                } else if (action == HabitsListViewModel.GO_TO_NEW_REMINDER) {
+                    goToAddReminder()
                 }
-            }else if ( action == HabitsListViewModel.GO_TO_NEW_REMINDER ){
-                goToAddReminder()
-            }
-        })
+            })
+        }
     }
 
     private fun goToAddReminder() {
-        startActivityForResult(ReminderActivity.getIntent(context), 1)
+        context?.let {
+            startActivityForResult(ReminderActivity.getIntent(it), 1)
 //        activity.finish()
+        }
     }
 
 }

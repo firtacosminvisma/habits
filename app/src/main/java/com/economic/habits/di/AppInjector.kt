@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import com.economic.habits.MainApp
+import com.economic.habits.ui.notifications.NotificationService
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
@@ -19,6 +20,10 @@ object AppInjector {
 
     fun clean() {
         appComponent = null
+    }
+
+    fun inject(service: NotificationService){
+        appComponent?.inject(service)
     }
 
     fun init(mainApp: MainApp) {

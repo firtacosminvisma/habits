@@ -66,4 +66,7 @@ dependencies {
 //lifecycle dependency
     implementation "android.arch.lifecycle:extensions:$googleArchVersion"
     kapt "android.arch.lifecycle:compiler:$googleArchVersion"
+//Joda
+    implementation "net.danlew:android.joda:$joda_time_android_version"
+
 }

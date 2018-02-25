@@ -1,7 +1,7 @@
 package com.economic.habits.ui.notifications
 
-import android.content.Intent
 import com.economic.habits.ui.model.ReminderModel
+import org.joda.time.DateTime
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
@@ -12,22 +12,44 @@ import javax.inject.Inject
 class NotificationPresenter @Inject constructor(private var model: ReminderModel) {
 
     var view: INotificationView?
-    set(value) {
+        set(value) {
         value?.let {
             notificationView = WeakReference(value)
         }
     }
     get() = notificationView.get()
 
-    private var notificationView:WeakReference<INotificationView?> = WeakReference(null)
+    private var notificationView: WeakReference<INotificationView?> = WeakReference(null)
 
+    fun setAlarm() {
+        /*get first 2 alarms*/
+        setAlarmAfterMin(DateTime.now().minuteOfDay)
+    }
 
+    fun displayAlarm() {
+        val reminders = model.getAllWithMin(DateTime.now().minuteOfDay)
+        reminders.forEach {
+            notificationView.get()?.printNotification(it.message, it.uid)
+        }
+        setAlarmAfterMin(DateTime.now().minuteOfDay+1)
+    }
 
-    fun setAlarm( intent: Intent) {
+    fun notificationTap() {
 
     }
 
-    fun displayAlarm( intent: Intent) {
 
+    private fun minuteToMilli(minute: Int): Long{
+        val now = DateTime()
+        val midNight = DateTime(now.year().get(), now.monthOfYear().get(), now.dayOfMonth, 0, 0, 0)
+        return midNight.plusMinutes(minute).millis
+    }
+
+    private fun setAlarmAfterMin(min: Int){
+        val reminder = model.getFirstAfter(min)
+        reminder?.let {
+            notificationView.get()?.deleteAlarm()
+            notificationView.get()?.setAlarm(minuteToMilli(it.minute))
+        }
     }
 }
