@@ -7,6 +7,7 @@ import com.economic.habits.ui.notifications.NotificationService
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import net.danlew.android.joda.JodaTimeAndroid
 import javax.inject.Inject
 
 /**
@@ -20,7 +21,7 @@ class MainApp : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
-
+        JodaTimeAndroid.init(this);
         AppInjector.init(this)
     }
 

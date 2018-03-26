@@ -19,7 +19,7 @@ class ReminderModel @Inject constructor(private val reminderDao: ReminderDao) : 
         return Observable.fromCallable(InsertCallable(rem, reminderDao))
     }
 
-    fun getReminderLiveData(): LiveData<List<Reminder>>{
+    fun getReminderLiveData(): LiveData<List<Reminder>> {
         return reminderDao.getAll()
     }
 
@@ -31,7 +31,7 @@ class ReminderModel @Inject constructor(private val reminderDao: ReminderDao) : 
         return reminderDao.getFirstTwo(DateTime.now().minuteOfDay)
     }
 
-    fun getFirst(): Reminder{
+    fun getFirst(): Reminder {
         return reminderDao.getFirstAfter(DateTime.now().minuteOfDay)
     }
 
@@ -52,7 +52,7 @@ class ReminderModel @Inject constructor(private val reminderDao: ReminderDao) : 
     class InsertCallable(
         private var remToAdd:Reminder? = null,
         private var reminderDAO:ReminderDao
-    ):Callable<Boolean>{
+    ):Callable<Boolean> {
         override fun call(): Boolean {
             remToAdd?.let{
                 reminderDAO.insertAll(it)
@@ -64,7 +64,7 @@ class ReminderModel @Inject constructor(private val reminderDao: ReminderDao) : 
     class RemoveCallable(
             private var remToAdd:Reminder? = null,
             private var reminderDAO:ReminderDao
-    ):Callable<Boolean>{
+    ):Callable<Boolean> {
         override fun call(): Boolean {
             remToAdd?.let{
                 reminderDAO.delete(it)

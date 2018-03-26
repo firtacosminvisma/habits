@@ -97,7 +97,7 @@ class NotificationService : IntentService("NotificationService"), INotificationV
                 .setStyle(NotificationCompat.BigTextStyle()
                     .bigText(message))
                 .setContentIntent(tapIntent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
         val notificationManager = NotificationManagerCompat.from(this)
         // notificationId is a unique int for each notification that you must define
         notificationManager.notify(notificationId, mBuilder.build())
